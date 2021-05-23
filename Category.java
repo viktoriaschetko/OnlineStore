@@ -1,23 +1,23 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Array;
 
 public class Category {
-    private final List<Category> products = new ArrayList<Category>();
-    public Category () {
-        this.initStoreItems ();
+
+    String Category;
+
+    public void setCategory(String Beer, String Food, String RockBand) {
     }
 
-    public List<Category> getProducts() {
-        return products;
+    public String getCategory() {
+        return Category;
     }
 
-    private void initStoreItems() {
-        String [] productNames = {};
-        Integer []  productRate = new Integer[]{};
-        Double [] productPrice = {};
 
-        for (int i=0; i < productNames.length; i++) {
-            this.products.add(new Product(i+1, productNames[i], productRate[i], productPrice[i]));
-        }
-    }
 }
+
+
+
+
+
+
+
+
