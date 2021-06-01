@@ -1,57 +1,52 @@
-
 import com.github.javafaker.Faker;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class RandomStorePopulator {
+   public  RandomStorePopulator () {
 
-    public List<Store> generateStores() {
-        List<Store>;
-        ArrayList<Object> store = new ArrayList<Object>();
-        Faker faker = new Faker();
+       Faker faker = new Faker();
+       List<Product> products = new ArrayList<>();
 
+       Category beer = new Category();
+       {
+           for (int i = 0; i < 10; i++) {
+               Product product = new Product();
+               product.setName(faker.beer().name());
+               product.setRate(faker.number().randomDigitNotZero());
+               product.setPrice(faker.number().randomDouble(5, 5, 55));
+               products.add(product);
+           }
+           beer.setProducts(products);
+           System.out.println(products);
 
-        for (
-                int i = 0;
-                i <10; i++) {
-            Array Beer;
-            {
-                Beer.add(createObject()
-                        .put("hop", faker.beer().hop())
-                        .put("malt", faker.beer().malt())
-                        .put("name", faker.beer().name())
-                        .put("style", faker.beer().style())
-                        .put("yeast", faker.beer().yeast()));
+           Category food = new Category();
 
-                return beer;
-            }
-
-            Array Food = createArray();
-
-            for (
-                    int i = 0;
-                    i < 10; i++) {
-                food.add(createObject()
-                        .put("ingredients", faker.food().ingredient())
-                        .put("spices", faker.food().spice())
-                        .put("measurements", faker.food().measurement()));
-
-                return food;
-            }
-
-            Array RockBand = createArray();
-
-            for (
-                    int i = 0;
-                    i < 10; i++) {
-                rockBand.add(createObject()
-                        .put("name", faker.rockBand().name()));
-                return rockBand;
-            }
-        }
-    }
+           {
+               for (int i = 0; i < 10; i++) {
+                   Product product = new Product();
+                   product.setName(faker.food().dish());
+                   product.setRate(faker.number().randomDigitNotZero());
+                   product.setPrice(faker.number().randomDouble(5, 15, 75));
+                   products.add(product);
+               }
+               food.setProducts(products);
+               System.out.println(products);
+           }
+           Category book = new Category();
+           {
+               for (int i = 0; i < 10; i++) {
+                   Product product = new Product();
+                   product.setName(faker.book().genre());
+                   product.setRate(faker.number().randomDigitNotZero());
+                   product.setPrice(faker.number().randomDouble(5, 10, 105));
+                   products.add(product);
+               }
+               book.setProducts(products);
+               System.out.println(products);
+           }
+       }
+   }
 }
