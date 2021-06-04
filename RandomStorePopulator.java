@@ -20,7 +20,6 @@ public class RandomStorePopulator {
                products.add(product);
            }
            beer.setProducts(products);
-           System.out.println(products);
 
            Category food = new Category();
 
@@ -33,7 +32,6 @@ public class RandomStorePopulator {
                    products.add(product);
                }
                food.setProducts(products);
-               System.out.println(products);
            }
            Category book = new Category();
            {
@@ -45,7 +43,6 @@ public class RandomStorePopulator {
                    products.add(product);
                }
                book.setProducts(products);
-               System.out.println(products);
            }
        }
    }
