@@ -7,4 +7,5 @@ public class Store {
     public List<Category> getCat() {
         return cat;
     }
+
 }

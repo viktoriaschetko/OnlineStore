@@ -1,49 +1,47 @@
 import com.github.javafaker.Faker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class RandomStorePopulator {
-   public  RandomStorePopulator () {
+    public static List<Category> generate() {
 
-       Faker faker = new Faker();
-       List<Product> products = new ArrayList<>();
+        Faker faker = new Faker();
 
-       Category beer = new Category();
-       {
-           for (int i = 0; i < 10; i++) {
-               Product product = new Product();
-               product.setName(faker.beer().name());
-               product.setRate(faker.number().randomDigitNotZero());
-               product.setPrice(faker.number().randomDouble(5, 5, 55));
-               products.add(product);
-           }
-           beer.setProducts(products);
+        Category beer = new Category("Beer");
 
-           Category food = new Category();
+        for (int i = 0; i < 10; i++) {
+            Product product = new Product();
+            product.setName(faker.beer().name());
+            product.setRate(faker.number().randomDigitNotZero());
+            product.setPrice(faker.number().randomDouble(5, 5, 55));
+            beer.addProduct(product);
+        }
+        Category food = new Category("Food");
 
-           {
-               for (int i = 0; i < 10; i++) {
-                   Product product = new Product();
-                   product.setName(faker.food().dish());
-                   product.setRate(faker.number().randomDigitNotZero());
-                   product.setPrice(faker.number().randomDouble(5, 15, 75));
-                   products.add(product);
-               }
-               food.setProducts(products);
-           }
-           Category book = new Category();
-           {
-               for (int i = 0; i < 10; i++) {
-                   Product product = new Product();
-                   product.setName(faker.book().genre());
-                   product.setRate(faker.number().randomDigitNotZero());
-                   product.setPrice(faker.number().randomDouble(5, 10, 105));
-                   products.add(product);
-               }
-               book.setProducts(products);
-           }
-       }
-   }
+
+        for (int i = 0; i < 10; i++) {
+            Product product = new Product();
+            product.setName(faker.food().dish());
+            product.setRate(faker.number().randomDigitNotZero());
+            product.setPrice(faker.number().randomDouble(5, 15, 75));
+            food.addProduct(product);
+        }
+
+
+        Category book = new Category("Book");
+
+        for (int i = 0; i < 10; i++) {
+            Product product = new Product();
+            product.setName(faker.book().genre());
+            product.setRate(faker.number().randomDigitNotZero());
+            product.setPrice(faker.number().randomDouble(5, 10, 105));
+            book.addProduct(product);
+        }
+
+        return Arrays.asList(beer, food, book);
+
+    }
 }

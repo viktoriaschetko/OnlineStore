@@ -1,15 +1,12 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Category {
     private String name;
-    private List<Product> products;
+    private List<Product> products = new ArrayList<>();
 
-    public void setName(String name) {
+    public Category(String name) {
         this.name = name;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
     }
 
     public String getName() {
@@ -22,6 +19,10 @@ public class Category {
 
     @Override
     public String toString() {
-        return "name" + name + ", " + "products " + products;
+        return name + "\n " + products;
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
     }
 }
