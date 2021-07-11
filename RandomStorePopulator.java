@@ -1,6 +1,5 @@
 import com.github.javafaker.Faker;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,20 +12,26 @@ public class RandomStorePopulator {
         Category beer = new Category("Beer");
 
         for (int i = 0; i < 10; i++) {
-            Product product = new Product();
-            product.setName(faker.beer().name());
-            product.setRate(faker.number().randomDigitNotZero());
-            product.setPrice(faker.number().randomDouble(5, 5, 55));
+            Product product = Product
+                    .builder()
+                    .name(faker.beer().name())
+                    .rate(faker.number().randomDigitNotZero())
+                    .price(faker.number().randomDouble(5, 5, 55))
+                    .build();
+
             beer.addProduct(product);
         }
         Category food = new Category("Food");
 
 
         for (int i = 0; i < 10; i++) {
-            Product product = new Product();
-            product.setName(faker.food().dish());
-            product.setRate(faker.number().randomDigitNotZero());
-            product.setPrice(faker.number().randomDouble(5, 15, 75));
+            Product product = Product
+                    .builder()
+                    .name(faker.food().dish())
+                    .rate(faker.number().randomDigitNotZero())
+                    .price(faker.number().randomDouble(5, 15, 75))
+                    .build();
+
             food.addProduct(product);
         }
 
@@ -34,10 +39,13 @@ public class RandomStorePopulator {
         Category book = new Category("Book");
 
         for (int i = 0; i < 10; i++) {
-            Product product = new Product();
-            product.setName(faker.book().genre());
-            product.setRate(faker.number().randomDigitNotZero());
-            product.setPrice(faker.number().randomDouble(5, 10, 105));
+            Product product = Product
+                    .builder()
+                    .name(faker.book().genre())
+                    .rate(faker.number().randomDigitNotZero())
+                    .price(faker.number().randomDouble(5, 10, 105))
+                    .build();
+
             book.addProduct(product);
         }
 
