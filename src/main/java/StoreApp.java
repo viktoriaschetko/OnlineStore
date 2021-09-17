@@ -4,7 +4,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class StoreApp {
@@ -13,7 +15,7 @@ public class StoreApp {
         List<Category> categories = RandomStorePopulator.generate();
 
         printUI();
-
+        startPurchasedProductsJanitor();
         expectCommands(categories);
     }
 
@@ -25,6 +27,7 @@ public class StoreApp {
                                 
                 sort - prints sorted product
                 top - prints top 5 most expensive products
+                create order - accepts customer's order for processing
                 quit - exit
                 """);
     }
@@ -42,6 +45,14 @@ public class StoreApp {
             cmdExecutionCode = h.run(cmd, categories);
         }
 
+        r.close();
+
         System.out.println("Bye bye!!!");
+    }
+
+    private static void startPurchasedProductsJanitor() {
+        Executors
+                .newScheduledThreadPool(1)
+                .scheduleWithFixedDelay(new Janitor(), 2, 2, TimeUnit.MINUTES);
     }
 }

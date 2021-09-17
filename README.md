@@ -1,2 +1,0 @@
-# OnlineStore
-My first repository
