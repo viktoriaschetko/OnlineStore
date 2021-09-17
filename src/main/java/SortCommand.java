@@ -17,7 +17,7 @@ import static java.util.Comparator.comparing;
 
 public class SortCommand {
 
-    private List<Category> categories;
+    private final List<Category> categories;
 
     public SortCommand(List<Category> categories) {
         this.categories = categories;
@@ -36,7 +36,7 @@ public class SortCommand {
         });
 
         clonedCats.forEach(c -> {
-            sort(c.getProducts(), (p1, p2) -> {
+            c.getProducts().sort((p1, p2) -> {
                 String nS = nameSort;
                 String pS = priceSort;
                 String rS = rateSort;
