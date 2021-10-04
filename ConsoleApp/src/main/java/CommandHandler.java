@@ -6,14 +6,14 @@ import java.util.List;
 
 public class CommandHandler {
 
-    public int run(String cmd, List<Category> categories) throws ParserConfigurationException, IOException, SAXException {
+    public int run(String cmd) throws ParserConfigurationException, IOException, SAXException {
         switch (cmd) {
             case "sort":
-                return new SortCommand(categories).execute();
+                return new SortCommand().execute();
             case "top":
-                return new Top5Command(categories).execute();
+                return new Top5Command().execute();
             case "create order":
-                return new CreateOrderCommand(categories).execute();
+                return new CreateOrderCommand().execute();
             case "quit":
                 return new QuitCommand().execute();
             default:

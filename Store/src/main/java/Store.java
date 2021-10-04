@@ -12,9 +12,10 @@ public class Store {
     private Store() {
     }
 
-   public static Store getInstance(){
-           if(instance == null){
-              instance = new Store();
-            }
-           return instance;
-}}
+    public static Store getInstance() {
+        if (instance == null) {
+            instance = new Store();
+        }
+        return instance;
+    }
+}

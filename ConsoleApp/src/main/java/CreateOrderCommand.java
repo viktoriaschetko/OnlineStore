@@ -6,20 +6,16 @@ import java.util.Random;
 
 public class CreateOrderCommand {
 
-    private final List<Category> categories;
-
-    public CreateOrderCommand(List<Category> categories) {
-        this.categories = categories;
-    }
-
     public int execute() throws IOException {
+        List<Category> categories = DataBase.getCategories();
+
         printProducts(categories);
 
         try {
-            String productName = expectCustomerChoice();
-            submitOrderForProcessing(productName);
+            Product product = expectCustomerChoice(categories);
+            submitOrderForProcessing(product.getId());
 
-            System.out.println("Your order of '" + productName + "' is accepted. Thank you!");
+            System.out.println("Your order of '" + product.getName() + "' is accepted. Thank you!");
         } catch (OrderCancelledException e) {
             System.out.println("Sorry you didn't find anything. Hope to have you back soon!");
         }
@@ -35,7 +31,7 @@ public class CreateOrderCommand {
         });
     }
 
-    private String expectCustomerChoice() throws OrderCancelledException, IOException {
+    private Product expectCustomerChoice(List<Category> categories) throws OrderCancelledException, IOException {
         String userChoice = null;
 
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
@@ -55,31 +51,38 @@ public class CreateOrderCommand {
             throw new OrderCancelledException();
         }
 
-        return userChoice;
+        return findProductByName(userChoice, categories);
     }
 
     private boolean validProductName(String userChoice, List<Category> categories) {
+        return findProductByName(userChoice, categories) != null;
+    }
+
+    private Product findProductByName(String name, List<Category> categories) {
         for (Category c : categories) {
             for (Product p : c.getProducts()) {
-                if (p.getName().equals(userChoice)) {
-                    return true;
+                if (p.getName().equals(name)) {
+                    return p;
                 }
             }
         }
-        return false;
+        return null;
     }
 
-    private void submitOrderForProcessing(String productName) {
+    private void submitOrderForProcessing(String productId) {
         new Thread(() -> {
             try {
+                String orderId = DataBase.createOrder(productId);
+
                 Thread.sleep((new Random().nextInt(30) + 1) * 1000);
 
-                DataBase.addPurchasedProduct(productName);
+                DataBase.setOrderStatus(orderId, OrderStatus.PROCESSED);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }).start();
     }
 
-    private static class OrderCancelledException extends Exception {}
+    private static class OrderCancelledException extends Exception {
+    }
 }

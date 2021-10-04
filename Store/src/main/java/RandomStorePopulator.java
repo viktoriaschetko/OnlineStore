@@ -5,6 +5,7 @@ import java.util.List;
 
 
 public class RandomStorePopulator {
+
     public static List<Category> generate() {
 
         Faker faker = new Faker();

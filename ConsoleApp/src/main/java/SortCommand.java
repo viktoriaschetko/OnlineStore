@@ -8,22 +8,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-
-import static java.util.Collections.sort;
-import static java.util.Comparator.comparing;
 
 public class SortCommand {
 
-    private final List<Category> categories;
-
-    public SortCommand(List<Category> categories) {
-        this.categories = categories;
-    }
-
     public int execute() throws ParserConfigurationException, IOException, SAXException {
+        List<Category> categories = DataBase.getCategories();
+
         final String nameSort = config("name");
         final String priceSort = config("price");
         final String rateSort = config("rate");

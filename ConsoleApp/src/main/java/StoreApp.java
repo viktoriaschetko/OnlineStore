@@ -12,11 +12,10 @@ import java.util.concurrent.TimeUnit;
 public class StoreApp {
 
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
-        List<Category> categories = RandomStorePopulator.generate();
-
+        DataBase.init(RandomStorePopulator.generate());
         printUI();
         startPurchasedProductsJanitor();
-        expectCommands(categories);
+        expectCommands();
     }
 
     private static void printUI() {
@@ -32,7 +31,7 @@ public class StoreApp {
                 """);
     }
 
-    private static void expectCommands(List<Category> categories) throws IOException, ParserConfigurationException, SAXException {
+    private static void expectCommands() throws IOException, ParserConfigurationException, SAXException {
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
         CommandHandler h = new CommandHandler();
 
@@ -42,7 +41,7 @@ public class StoreApp {
             System.out.println("Your choice, mam?");
 
             String cmd = r.readLine();
-            cmdExecutionCode = h.run(cmd, categories);
+            cmdExecutionCode = h.run(cmd);
         }
 
         r.close();

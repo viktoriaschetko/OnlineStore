@@ -4,13 +4,9 @@ import java.util.List;
 
 public class Top5Command {
 
-    private final List<Category> categories;
-
-    public Top5Command(List<Category> categories) {
-        this.categories = categories;
-    }
-
     public int execute() {
+        List<Category> categories = DataBase.getCategories();
+
         List<Product> allProducts = new ArrayList<>();
 
         categories.forEach(c -> {

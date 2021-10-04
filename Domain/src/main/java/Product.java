@@ -1,10 +1,22 @@
+import java.util.UUID;
+
 public class Product {
+
+    private String id = UUID.randomUUID().toString();
     private String name;
     private int rate;
     private double price;
 
     public static ProductBuilder builder() {
         return new ProductBuilder();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,6 +51,11 @@ public class Product {
     public static class ProductBuilder {
 
         private Product product = new Product();
+
+        public ProductBuilder id(String id) {
+            product.setId(id);
+            return this;
+        }
 
         public ProductBuilder name(String name) {
             product.setName(name);
