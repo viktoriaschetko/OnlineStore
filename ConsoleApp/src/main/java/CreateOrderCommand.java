@@ -1,0 +1,74 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Random;
+
+public class CreateOrderCommand {
+
+    public int execute() throws IOException {
+        List<Category> categories = StoreHttpClient.getCategories();
+
+        printProducts(categories);
+
+        try {
+            Product product = expectCustomerChoice(categories);
+            StoreHttpClient.createOrder(product.getId());
+
+            System.out.println("Your order of '" + product.getName() + "' is accepted. Thank you!");
+        } catch (OrderCancelledException e) {
+            System.out.println("Sorry you didn't find anything. Hope to have you back soon!");
+        }
+
+        return 0;
+    }
+
+    private void printProducts(List<Category> categories) {
+        categories.forEach(c -> {
+            System.out.println();
+            System.out.println("-- Category: " + c.getName());
+            c.getProducts().forEach(p -> System.out.println(p.getName()));
+        });
+    }
+
+    private Product expectCustomerChoice(List<Category> categories) throws OrderCancelledException, IOException {
+        String userChoice = null;
+
+        BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+
+        while (!"cancel".equalsIgnoreCase(userChoice) && !validProductName(userChoice, categories)) {
+            System.out.println();
+            System.out.println("Please enter valid product name or enter 'cancel' to cancel your order.");
+
+            userChoice = r.readLine();
+        }
+
+        if (userChoice == null) {
+            throw new IllegalStateException("User choice is NULL. This should never happen!");
+        }
+
+        if (userChoice.equalsIgnoreCase("cancel")) {
+            throw new OrderCancelledException();
+        }
+
+        return findProductByName(userChoice, categories);
+    }
+
+    private boolean validProductName(String userChoice, List<Category> categories) {
+        return findProductByName(userChoice, categories) != null;
+    }
+
+    private Product findProductByName(String name, List<Category> categories) {
+        for (Category c : categories) {
+            for (Product p : c.getProducts()) {
+                if (p.getName().equals(name)) {
+                    return p;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static class OrderCancelledException extends Exception {
+    }
+}
