@@ -13,7 +13,7 @@ import java.util.List;
 public class SortCommand {
 
     public int execute() throws ParserConfigurationException, IOException, SAXException {
-        List<Category> categories = DataBase.getCategories();
+        List<Category> categories = StoreHttpClient.getCategories();
 
         final String nameSort = config("name");
         final String priceSort = config("price");

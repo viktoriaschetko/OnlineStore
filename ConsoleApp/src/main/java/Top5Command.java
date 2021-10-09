@@ -5,7 +5,7 @@ import java.util.List;
 public class Top5Command {
 
     public int execute() {
-        List<Category> categories = DataBase.getCategories();
+        List<Category> categories = StoreHttpClient.getCategories();
 
         List<Product> allProducts = new ArrayList<>();
 

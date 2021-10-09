@@ -7,13 +7,13 @@ import java.util.Random;
 public class CreateOrderCommand {
 
     public int execute() throws IOException {
-        List<Category> categories = DataBase.getCategories();
+        List<Category> categories = StoreHttpClient.getCategories();
 
         printProducts(categories);
 
         try {
             Product product = expectCustomerChoice(categories);
-            submitOrderForProcessing(product.getId());
+            StoreHttpClient.createOrder(product.getId());
 
             System.out.println("Your order of '" + product.getName() + "' is accepted. Thank you!");
         } catch (OrderCancelledException e) {
@@ -67,20 +67,6 @@ public class CreateOrderCommand {
             }
         }
         return null;
-    }
-
-    private void submitOrderForProcessing(String productId) {
-        new Thread(() -> {
-            try {
-                String orderId = DataBase.createOrder(productId);
-
-                Thread.sleep((new Random().nextInt(30) + 1) * 1000);
-
-                DataBase.setOrderStatus(orderId, OrderStatus.PROCESSED);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
     }
 
     private static class OrderCancelledException extends Exception {
