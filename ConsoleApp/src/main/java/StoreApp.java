@@ -4,17 +4,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
 
 
 public class StoreApp {
 
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
-        List<Category> categories = RandomStorePopulator.generate();
-
         printUI();
-
-        expectCommands(categories);
+        expectCommands();
     }
 
     private static void printUI() {
@@ -25,11 +21,12 @@ public class StoreApp {
                                 
                 sort - prints sorted product
                 top - prints top 5 most expensive products
+                create order - accepts customer's order for processing
                 quit - exit
                 """);
     }
 
-    private static void expectCommands(List<Category> categories) throws IOException, ParserConfigurationException, SAXException {
+    private static void expectCommands() throws IOException, ParserConfigurationException, SAXException {
         BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
         CommandHandler h = new CommandHandler();
 
@@ -39,8 +36,10 @@ public class StoreApp {
             System.out.println("Your choice, mam?");
 
             String cmd = r.readLine();
-            cmdExecutionCode = h.run(cmd, categories);
+            cmdExecutionCode = h.run(cmd);
         }
+
+        r.close();
 
         System.out.println("Bye bye!!!");
     }
